@@ -49,18 +49,20 @@
 <script>
   $("#frm-message").submit(function (e) {
     e.preventDefault()
+    $('#send').addClass('is-loading')
+    $('#result').fadeOut(0)
 
     var form = $(this);
-    var url = form.attr('action');
+    var url = form.attr('action')
 
     $.ajax({
       type: "POST",
       url: url,
       data: form.serialize(),
-      success: function (data) {
+      success: function (data) {        
         $('#result-text').html(data)
+        $('#send').removeClass('is-loading')
         $('#result').fadeIn(2000)
-        $('#result').fadeOut(2000)
       }
     })
   })
