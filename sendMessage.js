@@ -1,33 +1,27 @@
 const { ServiceBusClient } = require('@azure/service-bus')
 
-// Define connection string and related Service Bus entity names here
-const connectionString = ''
-const queueName = ''
-
-async function main () {
+module.exports = async function send (connectionString, queueName, messageBody) {
   const sbClient = ServiceBusClient.createFromConnectionString(connectionString)
   const queueClient = sbClient.createQueueClient(queueName)
   const sender = queueClient.createSender()
+  let response = 'Unknown'
 
   try {
-    for (let i = 0; i < 10; i++) {
-      const message = {
-        body: `Hello world! ${i}`,
-        label: `test`,
-        userProperties: {
-          myCustomPropertyName: `my custom property value ${i}`
-        }
-      }
-      console.log(`Sending message: ${message.body}`)
-      await sender.send(message)
+    const message = {
+      body: messageBody,
+      label: `test-client`
     }
-
+    console.log(`sending message: ${message.body}`)
+    await sender.send(message)
+    console.log('message sent')
     await queueClient.close()
+    response = 'Message sent'
+  } catch (err) {
+    console.log(err)
+    response = JSON.stringify(err)
   } finally {
     await sbClient.close()
   }
-}
 
-main().catch((err) => {
-  console.log('Error occurred: ', err)
-})
+  return response
+}

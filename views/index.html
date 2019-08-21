@@ -1,9 +1,69 @@
 {% extends 'layout.njk' %}
 
 {% block content %}
-  <h1>Azure Service Bus Test Client</h1>
 
-  <form action="/" method="POST">
-    
-  </form>
+<div class="container">
+  <div class="column">
+    <h1 class="title is-2">Azure Service Bus Test Client</h1>
+
+    <form id="frm-message" action="/">
+
+      <div class="field">
+        <label class="label">Connection String</label>
+        <div class="control">
+          <input class="input" type="text" name="connectionString">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Queue</label>
+        <div class="control">
+          <input class="input" type="text" name="queue">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Message</label>
+        <div class="control">
+          <textarea class="textarea" name="message"></textarea>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <button class="button is-link" id="send">Send</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div id="result" class="column" style="display: none">
+    <article class="message is-primary">
+      <div id="result-text" class="message-body">
+      </div>
+    </article>
+  </div>
+
+</div>
+
+<script>
+  $("#frm-message").submit(function (e) {
+    e.preventDefault()
+
+    var form = $(this);
+    var url = form.attr('action');
+
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: form.serialize(),
+      success: function (data) {
+        $('#result-text').html(data)
+        $('#result').fadeIn(2000)
+        $('#result').fadeOut(2000)
+      }
+    })
+  })
+</script>
+
 {% endblock %}
