@@ -1,3 +1,5 @@
+name: 'Azure Service Bus Test Client'
+
 trigger:
   branches:
     include:
