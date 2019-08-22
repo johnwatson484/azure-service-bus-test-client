@@ -1,3 +1,8 @@
+trigger:
+  branches:
+    include:
+    - master
+
 pool:
   name: Azure Pipelines
   demands: npm
