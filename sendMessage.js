@@ -1,7 +1,7 @@
 const { ServiceBusClient } = require('@azure/service-bus')
 
-module.exports = async function send (connectionString, queueName, messageBody) {
-  console.log(`preparing to send ${messageBody} to ${queueName} queue`)
+module.exports = async function send (connectionString, queueName, message) {
+  console.log(`preparing to send ${message} to ${queueName} queue`)
 
   const sbClient = ServiceBusClient.createFromConnectionString(connectionString)
   const queueClient = sbClient.createQueueClient(queueName)
@@ -9,11 +9,7 @@ module.exports = async function send (connectionString, queueName, messageBody) 
   let response = 'Unknown'
 
   try {
-    const message = {
-      body: messageBody,
-      label: 'test-client'
-    }
-    console.log(`sending message: ${message.body}`)
+    console.log(`sending message ${message}`)
     await sender.send(message)
     console.log('message sent')
     await queueClient.close()
