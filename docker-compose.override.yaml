@@ -1,0 +1,13 @@
+version: '3.4'
+
+# This override file should be used in development environments to
+# bind-mount the app from the host into the container
+
+services:
+  azure-service-bus-test-client:
+    volumes:
+      - node_modules:/usr/src/app/node_modules
+      - .:/usr/src/app
+
+volumes:
+  node_modules:
