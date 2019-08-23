@@ -21,7 +21,7 @@ The below screenshot shows an overview of the the client.
 ## Set the connection string
 This can be found in the Azure portal under Shared Access Policies for either the root account or a specific queue key.
 
-This must be in the below format and note that the validation provided by the client is case sensitive.  For example "endpoint=..." would be invalid.
+This must be in the below format and note that the validation provided by the client is case sensitive.  For example "endpoint=..." would be invalid.  EntityPath is optional as it only applies to queue policies.
 
 `Endpoint=sb://YOUR_HOSTNAME/;SharedAccessKeyName=KEYNAME;SharedAccessKey=KEY;EntityPath=QUEUE`
 
