@@ -11,10 +11,12 @@ module.exports = async function send (connectionString, queue, message) {
     const sharedAccessKeyNameFlagLocation = connectionString.indexOf(sharedAccessKeyNameFlag)
     const sharedAccessKeyFlag = ';SharedAccessKey='
     const sharedAccessKeyFlagLocation = connectionString.indexOf(sharedAccessKeyFlag)
+    const entityPathFlag = ';EntityPath='
+    const entityPathLocation = connectionString.indexOf(entityPathFlag)
 
     const host = connectionString.substring(hostFlagLocation + hostFlag.length, sharedAccessKeyNameFlagLocation).replace('/', '')
     const sharedAccessKeyName = connectionString.substring(sharedAccessKeyNameFlagLocation + sharedAccessKeyNameFlag.length, sharedAccessKeyFlagLocation)
-    const SharedAccessKey = connectionString.substring(sharedAccessKeyFlagLocation + sharedAccessKeyFlag.length, connectionString.length)
+    const SharedAccessKey = connectionString.substring(sharedAccessKeyFlagLocation + sharedAccessKeyFlag.length, entityPathLocation > -1 ? entityPathLocation : connectionString.length)
 
     connectionOptions = {
       transport: 'ssl',
@@ -57,7 +59,7 @@ module.exports = async function send (connectionString, queue, message) {
   console.log('connection open')
   const sender = await connection.createSender(senderOptions)
   console.log(`sending message ${message}`)
-  await sender.send(message)
+  await sender.send({ body: message })
   console.log('message sent')
   await sender.close()
   await connection.close()
