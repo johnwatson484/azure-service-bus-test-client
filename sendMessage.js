@@ -5,65 +5,73 @@ module.exports = async function send (connectionString, queue, message) {
   let connectionOptions = {}
 
   try {
-    const hostFlag = 'Endpoint=sb://'
-    const hostFlagLocation = connectionString.indexOf(hostFlag)
-    const sharedAccessKeyNameFlag = ';SharedAccessKeyName='
-    const sharedAccessKeyNameFlagLocation = connectionString.indexOf(sharedAccessKeyNameFlag)
-    const sharedAccessKeyFlag = ';SharedAccessKey='
-    const sharedAccessKeyFlagLocation = connectionString.indexOf(sharedAccessKeyFlag)
-    const entityPathFlag = ';EntityPath='
-    const entityPathLocation = connectionString.indexOf(entityPathFlag)
-
-    const host = connectionString.substring(hostFlagLocation + hostFlag.length, sharedAccessKeyNameFlagLocation).replace('/', '')
-    const sharedAccessKeyName = connectionString.substring(sharedAccessKeyNameFlagLocation + sharedAccessKeyNameFlag.length, sharedAccessKeyFlagLocation)
-    const SharedAccessKey = connectionString.substring(sharedAccessKeyFlagLocation + sharedAccessKeyFlag.length, entityPathLocation > -1 ? entityPathLocation : connectionString.length)
-
-    connectionOptions = {
-      transport: 'ssl',
-      host: host,
-      hostname: host,
-      username: sharedAccessKeyName,
-      password: SharedAccessKey,
-      port: 5671,
-      reconnect: false
-    }
-    console.log('connection string parsed')
+    connectionOptions = parseConnectionString(connectionString)
   } catch (err) {
-    console.log('unable to parse connection string', err)
+    console.error('unable to parse connection string', err)
     return 'Unable to parse connection string'
   }
 
   const connection = new rheaPromise.Connection(connectionOptions)
+  const senderOptions = configureSender(queue)
 
-  const senderOptions = {
+  try {
+    console.log(`sending message ${message}`)
+    await connection.open()
+    const sender = await connection.createSender(senderOptions)
+    await sender.send({ body: message })
+    await sender.close()
+    await connection.close()
+    console.log('message sent')
+  } catch (err) {
+    console.error('unable to send message', err)
+    return JSON.stringify(err)
+  }
+  return 'Message sent'
+}
+
+function configureSender (address) {
+  return {
     name: 'azure-service-bus-test-client',
     target: {
-      address: queue
+      address
     },
     onError: (context) => {
       const senderError = context.sender && context.sender.error
       if (senderError) {
-        console.log('unable to send message', senderError)
+        console.error('unable to send message', senderError)
       }
     },
     onSessionError: (context) => {
       const sessionError = context.session && context.session.error
       if (sessionError) {
-        console.log('session error', sessionError)
+        console.error('session error', sessionError)
       }
     }
   }
-  console.log('connection configured')
+}
 
-  await connection.open()
-  console.log('connection open')
-  const sender = await connection.createSender(senderOptions)
-  console.log(`sending message ${message}`)
-  await sender.send({ body: message })
-  console.log('message sent')
-  await sender.close()
-  await connection.close()
-  console.log('connection closed')
+function parseConnectionString (connectionString) {
+  const hostFlag = 'Endpoint=sb://'
+  const hostFlagLocation = connectionString.indexOf(hostFlag)
+  const sharedAccessKeyNameFlag = ';SharedAccessKeyName='
+  const sharedAccessKeyNameFlagLocation = connectionString.indexOf(sharedAccessKeyNameFlag)
+  const sharedAccessKeyFlag = ';SharedAccessKey='
+  const sharedAccessKeyFlagLocation = connectionString.indexOf(sharedAccessKeyFlag)
+  const entityPathFlag = ';EntityPath='
+  const entityPathLocation = connectionString.indexOf(entityPathFlag)
+  const host = connectionString.substring(hostFlagLocation + hostFlag.length, sharedAccessKeyNameFlagLocation).replace('/', '')
+  const sharedAccessKeyName = connectionString.substring(sharedAccessKeyNameFlagLocation + sharedAccessKeyNameFlag.length, sharedAccessKeyFlagLocation)
+  const SharedAccessKey = connectionString.substring(sharedAccessKeyFlagLocation + sharedAccessKeyFlag.length, entityPathLocation > -1 ? entityPathLocation : connectionString.length)
 
-  return 'Message sent'
+  const connectionOptions = {
+    transport: 'ssl',
+    host: host,
+    hostname: host,
+    username: sharedAccessKeyName,
+    password: SharedAccessKey,
+    port: 5671,
+    reconnect: false
+  }
+  console.log('connection string parsed')
+  return connectionOptions
 }

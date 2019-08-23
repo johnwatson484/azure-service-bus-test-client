@@ -5,7 +5,6 @@ const nunjucks = require('nunjucks')
 const bodyParser = require('body-parser')
 const favicon = require('serve-favicon')
 const { check, validationResult } = require('express-validator')
-
 const sendMessage = require('./sendMessage')
 
 nunjucks.configure('views', {
@@ -47,9 +46,8 @@ router.post('/', [
   const response = await sendMessage(
     req.body.connectionString,
     req.body.queue,
-    req.body.message
+    JSON.stringify(JSON.parse(req.body.message))
   )
-
   res.send(response)
 })
 
