@@ -16,7 +16,7 @@ The application can be run in a container if preferred by running the `scripts/s
 # Using the client
 The below screenshot shows an overview of the the client.
 
-<img src="./docs/screenshot.PNG" alt="Client screenshot" style="max-width:500px;" />
+![Client Screenshot](/docs/screenshot.png "Client Screenshot")
 
 ## Set the connection string
 This can be found in the Azure portal under Shared Access Policies for either the root account or a specific queue key.
