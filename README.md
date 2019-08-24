@@ -1,7 +1,7 @@
 [![Build Status](https://johnwatson484.visualstudio.com/John%20D%20Watson/_apis/build/status/johnwatson484.azure-service-bus-test-client?branchName=master)](https://johnwatson484.visualstudio.com/John%20D%20Watson/_build/latest?definitionId=24&branchName=master)
 
 # Azure Service Bus Test Client
-A test client for sending messages to Azure Service Bus
+A test client for sending JSON format messages to Azure Service Bus
 
 # Prerequisites
 Node v10+
