@@ -17,7 +17,7 @@ module.exports = async function send (connectionString, queue, message) {
   try {
     console.log(`sending message ${message}`)
     await connection.open()
-    const sender = await connection.createSender(senderOptions)
+    const sender = await connection.createAwaitableSender(senderOptions)
     await sender.send({ body: message })
     await sender.close()
     await connection.close()
@@ -35,6 +35,7 @@ function configureSender (address) {
     target: {
       address
     },
+    sendTimeoutInSeconds: 10,
     onError: (context) => {
       const senderError = context.sender && context.sender.error
       if (senderError) {
