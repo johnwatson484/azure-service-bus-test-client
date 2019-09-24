@@ -5,7 +5,7 @@ pipeline {
         
     stage('Cloning Git') {
       steps {
-        git 'https://github.com/johnwatson484/azure-service-bus-test-client'
+        checkout scm
       }
     }
         
