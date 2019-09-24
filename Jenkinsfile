@@ -1,13 +1,20 @@
 pipeline {
   agent any
- 
+    
   tools {nodejs "node"}
- 
+    
   stages {
-    stage('Example') {
+        
+    stage('Cloning Git') {
       steps {
-        sh 'npm config ls'
+        git 'https://github.com/johnwatson484/azure-service-bus-test-client'
       }
     }
+        
+    stage('Install dependencies') {
+      steps {
+        sh 'npm install'
+      }
+    }     
   }
 }
