@@ -1,8 +1,6 @@
 pipeline {
   agent any
     
-  tools {nodejs "node"}
-    
   stages {
         
     stage('Cloning Git') {
@@ -13,6 +11,7 @@ pipeline {
         
     stage('Install dependencies') {
       steps {
+        sh "apk add nodejs"
         sh 'npm install'
       }
     }     
