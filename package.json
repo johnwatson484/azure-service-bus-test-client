@@ -17,6 +17,6 @@
     "rhea": "^1.0.15",
     "rhea-promise": "^1.0.0",
     "serve-favicon": "^2.5.0",
-    "standard": "^14.0.0"
+    "standard": "^14.3.1"
   }
 }
