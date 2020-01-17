@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.7'
 
 # This override file should be used in development environments to
 # bind-mount the app from the host into the container
