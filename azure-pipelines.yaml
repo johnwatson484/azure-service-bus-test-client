@@ -7,6 +7,24 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- task: SonarQubePrepare@4
+  inputs:
+    SonarQube: 'SonarQube'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'azure-service-bus-test-client'
+    cliProjectName: 'azure-service-bus-test-client'
+    cliSources: '.'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+
+- task: SonarQubeAnalyze@4
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+
+- task: SonarQubePublish@4
+  inputs:
+    pollingTimeoutSec: '300'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+
 - task: Npm@1
   displayName: 'npm install'
   inputs:
