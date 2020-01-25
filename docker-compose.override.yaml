@@ -11,4 +11,5 @@ services:
       - ./config.js:/usr/src/app/config.js
       - ./index.js:/usr/src/app/index.js
       - ./sendMessage.js:/usr/src/app/sendMessage.js
+      - ./package.json:/usr/src/app/package.json
 
