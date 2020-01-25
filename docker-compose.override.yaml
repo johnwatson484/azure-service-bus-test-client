@@ -5,9 +5,10 @@ version: '3.7'
 
 services:
   azure-service-bus-test-client:
-    volumes:
-      - node_modules:/usr/src/app/node_modules
-      - .:/usr/src/app
+    volumes:      
+      - ./views/:/usr/src/app/views/
+      - ./app.js:/usr/src/app/app.js
+      - ./config.js:/usr/src/app/config.js
+      - ./index.js:/usr/src/app/index.js
+      - ./sendMessage.js:/usr/src/app/sendMessage.js
 
-volumes:
-  node_modules:
