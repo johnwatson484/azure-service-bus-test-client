@@ -1,7 +1,7 @@
 FROM node:12.15.0-alpine
 
-WORKDIR /usr/src/app
-RUN chown node:node /usr/src/app
+WORKDIR /node
+RUN chown node:node /node
 
 USER node
 
@@ -15,9 +15,9 @@ RUN npm install
 # RUN npm ci --only=production
 
 # Bundle app source
-COPY --chown=node:node . .
+COPY --chown=node:node ./app .
 
 ARG PORT=3011
 ENV PORT ${PORT}
 EXPOSE ${PORT} 9229 9230
-CMD [ "node", "index" ]
+CMD [ "npm", "start" ]

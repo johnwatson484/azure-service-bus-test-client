@@ -2,9 +2,10 @@
   "name": "azure-service-bus-test-client",
   "version": "1.0.0",
   "description": "A client to send and receive messages from an Azure Service bus instance",
-  "main": "index.js",
+  "main": "./app/index.js",
   "scripts": {
-    "start:watch": "nodemon --inspect=0.0.0.0 --ext js,njk --legacy-watch index.js"
+    "start": "node ./app/index",
+    "start:watch": "nodemon --inspect=0.0.0.0 --ext js,njk --legacy-watch ./app/index.js"
   },
   "author": "John Watson",
   "license": "ISC",
@@ -13,7 +14,7 @@
     "express": "^4.17.1",
     "express-validator": "^6.3.0",
     "nodemon": "^2.0.1",
-    "nunjucks": "^3.2.0",
+    "nunjucks": "^3.2.1",
     "rhea": "^1.0.15",
     "rhea-promise": "^1.0.0",
     "serve-favicon": "^2.5.0",

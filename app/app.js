@@ -5,9 +5,9 @@ const nunjucks = require('nunjucks')
 const bodyParser = require('body-parser')
 const favicon = require('serve-favicon')
 const { check, validationResult } = require('express-validator')
-const sendMessage = require('./sendMessage')
+const sendMessage = require('./send-message')
 
-nunjucks.configure('views', {
+nunjucks.configure('./app/views', {
   autoescape: true,
   express: app
 })
@@ -15,7 +15,7 @@ nunjucks.configure('views', {
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.use(favicon('favicon.ico'))
+app.use(favicon('./app/favicon.ico'))
 
 router.get('/', function (req, res) {
   res.render('index.njk')

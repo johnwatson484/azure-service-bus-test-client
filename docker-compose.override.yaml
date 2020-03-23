@@ -5,11 +5,10 @@ version: '3.7'
 
 services:
   azure-service-bus-test-client:
-    volumes:      
-      - ./views/:/usr/src/app/views/
-      - ./app.js:/usr/src/app/app.js
-      - ./config.js:/usr/src/app/config.js
-      - ./index.js:/usr/src/app/index.js
-      - ./sendMessage.js:/usr/src/app/sendMessage.js
-      - ./package.json:/usr/src/app/package.json
+    command: npm run start:watch
+    ports:
+      - "3011:3011"
+    volumes:
+      - ./app:/node/app
+      - ./package.json:/node/package.json
 

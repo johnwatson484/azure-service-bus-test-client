@@ -4,6 +4,3 @@ services:
     build: .
     image: azure-service-bus-test-client
     container_name: azure-service-bus-test-client
-    command: npm run start:watch
-    ports:
-      - "3011:3011"
