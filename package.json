@@ -4,7 +4,7 @@
   "description": "A client to send and receive messages from an Azure Service bus instance",
   "main": "./app/index.js",
   "scripts": {
-    "start": "node ./app/index",
+    "start": "node app",
     "start:watch": "nodemon --inspect=0.0.0.0 --ext js,njk --legacy-watch ./app/index.js"
   },
   "author": "John Watson",

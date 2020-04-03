@@ -1,23 +1,26 @@
-FROM node:12.15.0-alpine
+# Development
+FROM node:12.16.0-alpine AS development
 
-WORKDIR /node
-RUN chown node:node /node
+WORKDIR /home/node
 
-USER node
+ENV NODE_ENV development
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY --chown=node:node package*.json ./
-
-RUN npm install
-# If you are building your code for production
-# RUN npm ci --only=production
-
-# Bundle app source
-COPY --chown=node:node ./app .
+# Set global npm dependencies to be stored under the node user directory
+ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
+ENV PATH=$PATH:/home/node/.npm-global/bin
 
 ARG PORT=3011
 ENV PORT ${PORT}
-EXPOSE ${PORT} 9229 9230
-CMD [ "npm", "start" ]
+ARG PORT_DEBUG=9229
+EXPOSE ${PORT} ${PORT_DEBUG}
+
+COPY --chown=node:node package*.json ./
+RUN npm install
+COPY --chown=node:node . .
+
+CMD [ "npm", "run", "start:watch" ]
+
+# Production
+FROM development AS production
+RUN npm ci
+CMD [ "node", "app" ]
