@@ -5,7 +5,9 @@ version: '3.7'
 
 services:
   azure-service-bus-test-client:
-    command: npm run start:watch
+    build: 
+      context: .
+      target: development
     ports:
       - "3011:3011"
     volumes:
