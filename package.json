@@ -15,7 +15,7 @@
     "express-validator": "^6.5.0",
     "nodemon": "^2.0.4",
     "nunjucks": "^3.2.1",
-    "rhea": "^1.0.21",
+    "rhea": "^1.0.23",
     "rhea-promise": "^1.0.0",
     "serve-favicon": "^2.5.0",
     "standard": "^14.3.4"
