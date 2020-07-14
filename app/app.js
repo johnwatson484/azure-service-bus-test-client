@@ -5,7 +5,7 @@ const nunjucks = require('nunjucks')
 const bodyParser = require('body-parser')
 const favicon = require('serve-favicon')
 const { check, validationResult } = require('express-validator')
-const sendMessage = require('./send-message')
+const { sendMessage, formatMessage } = require('./sender')
 
 nunjucks.configure('./app/views', {
   autoescape: true,
@@ -43,10 +43,12 @@ router.post('/', [
     return res.send(errors.array().map(x => `<p>${x.msg}</p>`))
   }
 
+  const message = formatMessage(req.body.format, req.body.message)
+
   const response = await sendMessage(
     req.body.connectionString,
     req.body.queue,
-    JSON.stringify(JSON.parse(req.body.message))
+    message
   )
   res.send(response)
 })

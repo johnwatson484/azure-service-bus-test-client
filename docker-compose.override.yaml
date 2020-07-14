@@ -11,6 +11,6 @@ services:
     ports:
       - "3011:3011"
     volumes:
-      - ./app:/node/app
+      - ./app/:/home/node/app/
       - ./package.json:/node/package.json
 

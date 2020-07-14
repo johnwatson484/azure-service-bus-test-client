@@ -1,6 +1,6 @@
 const rheaPromise = require('rhea-promise')
 
-module.exports = async function send (connectionString, queue, message) {
+async function sendMessage (connectionString, queue, message) {
   console.log(`preparing to send ${message} to ${queue} queue`)
   let connectionOptions = {}
 
@@ -76,3 +76,5 @@ function parseConnectionString (connectionString) {
   console.log('connection string parsed')
   return connectionOptions
 }
+
+module.exports = sendMessage
