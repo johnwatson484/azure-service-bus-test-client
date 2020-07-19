@@ -30,16 +30,7 @@ steps:
       targetType: 'inline'
       script: |
         $packageVersion = (Get-Content '$(Agent.BuildDirectory)/s/$(repo)/package.json' | ConvertFrom-Json).version
-        Write-Host "##vso[task.setvariable variable=version;]$packageVersion"
-
-  - task: PowerShell@2
-    displayName: Check GitHub release
-    inputs:
-      targetType: 'inline'
-      script: |
-        $releaseExists = (Invoke-RestMethod -Uri 'https://api.github.com/repos/johnwatson484/$(repo)/releases/tags/$(version)').tag_name -eq '$(version)'
-        Write-Host $releaseExists
-        Write-Host "##vso[task.setvariable variable=releaseExists;]$releaseExists"
+        Write-Host "##vso[task.setvariable variable=version;]$packageVersion"  
 
   # - task: Docker@2
   #   displayName: Build image
@@ -104,19 +95,26 @@ steps:
   #     git push origin HEAD:master
   #   displayName: Update Helm repo
 
-  
+  - task: PowerShell@2
+    displayName: Check GitHub release
+    inputs:
+      targetType: 'inline'
+      script: |
+        $releaseExists = (Invoke-RestMethod -Uri 'https://api.github.com/repos/johnwatson484/$(repo)/releases/tags/$(version)').tag_name -eq '$(version)'
+        Write-Host "##vso[task.setvariable variable=releaseExists;]$releaseExists"
 
-  # - task: GitHubRelease@1
-  #   displayName: GitHub release
-  #   inputs:
-  #     gitHubConnection: 'John D Watson PAT'
-  #     repositoryName: '$(Build.Repository.Name)'
-  #     action: 'create'
-  #     target: '$(Build.SourceVersion)'
-  #     tagSource: 'userSpecifiedTag'
-  #     tag: '$(version)'
-  #     title: '$(version)'
-  #     releaseNotesSource: 'inline'
-  #     changeLogCompareToRelease: 'lastFullRelease'
-  #     changeLogType: 'commitBased'
-  #   continueOnError: true
+  - task: GitHubRelease@1
+    displayName: GitHub release
+    inputs:
+      gitHubConnection: 'John D Watson PAT'
+      repositoryName: '$(Build.Repository.Name)'
+      action: 'create'
+      target: '$(Build.SourceVersion)'
+      tagSource: 'userSpecifiedTag'
+      tag: '$(version)'
+      title: '$(version)'
+      releaseNotesSource: 'inline'
+      changeLogCompareToRelease: 'lastFullRelease'
+      changeLogType: 'commitBased'
+    continueOnError: true
+    condition: and(succeeded(), eq(variables.releaseExists, false))
