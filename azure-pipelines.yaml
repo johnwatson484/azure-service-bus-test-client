@@ -40,6 +40,14 @@ steps:
         $releaseExists = (Invoke-WebRequest -Uri https://api.github.com/repos/johnwatson484/$(repo)/releases/tags/$(version) | ConvertFrom-Json).tag_name -eq $(version)
         Write-Host "##vso[task.setvariable variable=releaseExists;]$releaseExists"
 
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: |
+        # Write your commands here
+        
+        echo $(releaseExists)
+
   - task: Docker@2
     displayName: Build image
     inputs:
