@@ -37,7 +37,7 @@ steps:
     inputs:
       targetType: 'inline'
       script: |
-        $releaseExists = Invoke-WebRequest -Uri https://api.github.com/repos/johnwatson484/$(repo)/releases/tags/$(version) | ConvertFrom-Json
+        $releaseExists = (Invoke-WebRequest -Uri https://api.github.com/repos/johnwatson484/$(repo)/releases/tags/$(version)).Content
         Write-Host $releaseExists
         Write-Host "##vso[task.setvariable variable=releaseExists;]$releaseExists"
 
