@@ -37,7 +37,7 @@ steps:
     inputs:
       targetType: 'inline'
       script: |
-        $releaseExists = (Invoke-RestMethod -Uri 'https://api.github.com/repos/johnwatson484/$(repo)/releases/tags/$(version)').tag_name -eq $(version)
+        $releaseExists = (Invoke-RestMethod -Uri 'https://api.github.com/repos/johnwatson484/$(repo)/releases/tags/$(version)').tag_name -eq '$(version)'
         Write-Host $releaseExists
         Write-Host "##vso[task.setvariable variable=releaseExists;]$releaseExists"
 
