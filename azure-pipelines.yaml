@@ -74,8 +74,8 @@ steps:
   #   inputs:
   #     helmVersionToInstall: 'latest'
 
-  # - checkout: helmRepo
-  #   displayName: Clone Helm repository
+  - checkout: helmRepo
+    displayName: Clone Helm repository
 
   # - script: |
   #     helm package $(Agent.BuildDirectory)/s/$(repo)/$(helmChartPath) --version $(version) --destination $(Agent.BuildDirectory)/s/$(helmRepo) --dependency-update
