@@ -1,0 +1,30 @@
+environment: development
+name: azure-service-bus-test-client
+image: azure-service-bus-test-client
+
+service:
+  port: 80
+
+container:
+  imagePullPolicy: IfNotPresent
+  requestMemory: 60Mi
+  requestCpu: 60m
+  limitMemory: 60Mi
+  limitCpu: 60m
+  readOnlyRootFilesystem: false
+  allowPrivilegeEscalation: false
+  port: 3011
+
+ingress:
+  class: nginx
+  host:
+  certIssuer: letsencrypt
+
+deployment:
+  restartPolicy: Always
+  replicas: 1
+  minReadySeconds: 5
+  redeployOnChange: update this field to force a change
+  imagePullSecret:
+  runAsNonRoot: true
+  runAsUser: 1000
