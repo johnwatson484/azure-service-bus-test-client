@@ -31,5 +31,8 @@ This is the queue where the message will be sent to.
 ## Message
 This is the message that will be sent to the specified queue and must be in JSON format.
 
+## Format
+Messages can be sent as JSON or string.
+
 # Errors
 If invalid crendentials or malformed JSON is provided an error will be returned through the client.
