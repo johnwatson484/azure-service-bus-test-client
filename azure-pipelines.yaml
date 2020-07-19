@@ -32,68 +32,68 @@ steps:
         $packageVersion = (Get-Content '$(Agent.BuildDirectory)/s/$(repo)/package.json' | ConvertFrom-Json).version
         Write-Host "##vso[task.setvariable variable=version;]$packageVersion"  
 
-  # - task: Docker@2
-  #   displayName: Build image
-  #   inputs:
-  #     containerRegistry: 'DockerHub'
-  #     repository: '$(containerRepository)'
-  #     command: 'build'
-  #     Dockerfile: '$(Agent.BuildDirectory)/s/$(repo)/Dockerfile'
-  #     tags: |
-  #       $(version)
-  #       latest
-  #     arguments: '--target production'
-  #     addPipelineData: false
+  - task: Docker@2
+    displayName: Build image
+    inputs:
+      containerRegistry: 'DockerHub'
+      repository: '$(containerRepository)'
+      command: 'build'
+      Dockerfile: '$(Agent.BuildDirectory)/s/$(repo)/Dockerfile'
+      tags: |
+        $(version)
+        latest
+      arguments: '--target production'
+      addPipelineData: false
 
-  # - task: Docker@2
-  #   displayName: Push image
-  #   inputs:
-  #     containerRegistry: 'DockerHub'
-  #     repository: '$(containerRepository)'
-  #     command: 'push'
-  #     tags: |
-  #       $(version)
-  #       latest
-  #     addPipelineData: false
+  - task: Docker@2
+    displayName: Push image
+    inputs:
+      containerRegistry: 'DockerHub'
+      repository: '$(containerRepository)'
+      command: 'push'
+      tags: |
+        $(version)
+        latest
+      addPipelineData: false
 
-  # - script: |
-  #     sed -i -e 's/image: .*/image: johnwatson484\/$(repo):$(version)/' $(Agent.BuildDirectory)/s/$(repo)/$(helmChartPath)/values.yaml
-  #   displayName: Update Helm values
+  - script: |
+      sed -i -e 's/image: .*/image: johnwatson484\/$(repo):$(version)/' $(Agent.BuildDirectory)/s/$(repo)/$(helmChartPath)/values.yaml
+    displayName: Update Helm values
   
-  # - task: HelmInstaller@1
-  #   displayName: Install Helm
-  #   inputs:
-  #     helmVersionToInstall: 'latest'
+  - task: HelmInstaller@1
+    displayName: Install Helm
+    inputs:
+      helmVersionToInstall: 'latest'
 
   - checkout: helmRepo
     displayName: Clone Helm repository
 
-  # - script: |
-  #     helm package $(Agent.BuildDirectory)/s/$(repo)/$(helmChartPath) --version $(version) --destination $(Agent.BuildDirectory)/s/$(helmRepo) --dependency-update
-  #   displayName: Package Helm
+  - script: |
+      helm package $(Agent.BuildDirectory)/s/$(repo)/$(helmChartPath) --version $(version) --destination $(Agent.BuildDirectory)/s/$(helmRepo) --dependency-update
+    displayName: Package Helm
 
-  # - task: DownloadSecureFile@1
-  #   name: sshKey
-  #   displayName: Download SSH key
-  #   inputs:
-  #     secureFile: 'GitHub-Helm-Deploy-Key'
+  - task: DownloadSecureFile@1
+    name: sshKey
+    displayName: Download SSH key
+    inputs:
+      secureFile: 'GitHub-Helm-Deploy-Key'
 
-  # - script: |
-  #     mkdir ~/.ssh && mv $(sshKey.secureFilePath) ~/.ssh/id_rsa
-  #     chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa
-  #     ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-  #   displayName: Install SSH key
+  - script: |
+      mkdir ~/.ssh && mv $(sshKey.secureFilePath) ~/.ssh/id_rsa
+      chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa
+      ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+    displayName: Install SSH key
   
-  # - script: |
-  #     cd $(Agent.BuildDirectory)/s/$(helmRepo)
-  #     helm repo index . --merge ./index.yaml
-  #     git config --global user.email "azuredevops@microsoft.com"
-  #     git config --global user.name "Azure DevOps"
-  #     git remote set-url --push origin $(helmRepositoryUrl)
-  #     git add .
-  #     git commit -m "$(repo) updated by Azure DevOps"
-  #     git push origin HEAD:master
-  #   displayName: Update Helm repo
+  - script: |
+      cd $(Agent.BuildDirectory)/s/$(helmRepo)
+      helm repo index . --merge ./index.yaml
+      git config --global user.email "azuredevops@microsoft.com"
+      git config --global user.name "Azure DevOps"
+      git remote set-url --push origin $(helmRepositoryUrl)
+      git add .
+      git commit -m "$(repo) updated by Azure DevOps"
+      git push origin HEAD:master
+    displayName: Update Helm repo
 
   - task: PowerShell@2
     displayName: Check GitHub release
