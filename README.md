@@ -4,14 +4,25 @@
 A test client for sending JSON format messages to Azure Service Bus
 
 # Prerequisites
-Node v10+
+Node v12+  
+
+Or:  
+
+Docker
 
 # Running the client
+## From source
 - Clone the repo and run `npm install` to install required npm packages
 - Update the preferred port in the `config.js` file.  By default this is set to **3011**.
 - Run `npm start` to start the application.
 
 The application can be run in a container if preferred by running the `scripts/start` script.
+
+## Docker
+`docker run -p 3011:3011 johnwatson484/azure-service-bus-test-client`
+
+## Hosted
+A hosted version is available at https://asbtc.lynxmagnus.com/
 
 # Using the client
 The below screenshot shows an overview of the the client.
