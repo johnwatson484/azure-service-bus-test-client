@@ -1,6 +1,6 @@
 {
   "name": "azure-service-bus-test-client",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A client to send and receive messages from an Azure Service bus instance",
   "main": "./app/index.js",
   "scripts": {
