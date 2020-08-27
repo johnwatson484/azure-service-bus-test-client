@@ -1,11 +1,13 @@
 node_modules/
 test-output/
 .dockerignore
-test-output
-
-scripts
+docs/
 docker-compose*
-LICENCE
+LICENSE
 README.md
 Dockerfile
 npm-debug.log
+azure-pipelines.yaml
+.gitignore
+helm/
+.vscode/
