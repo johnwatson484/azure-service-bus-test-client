@@ -5,7 +5,7 @@ const nunjucks = require('nunjucks')
 const bodyParser = require('body-parser')
 const favicon = require('serve-favicon')
 const { check, validationResult } = require('express-validator')
-const { sendMessage, formatMessage } = require('./sender')
+const { MessageSender } = require('./messaging')
 
 nunjucks.configure('./app/views', {
   autoescape: true,
@@ -43,13 +43,23 @@ router.post('/', [
     return res.send(errors.array().map(x => `<p>${x.msg}</p>`))
   }
 
-  const message = formatMessage(req.body.format, req.body.message)
+  let response
 
-  const response = await sendMessage(
-    req.body.connectionString,
-    req.body.queue,
-    message
-  )
+  try {
+    const message = JSON.parse(req.body.message)
+    const config = {
+      connectionString: req.body.connectionString,
+      address: req.body.queue,
+      type: req.body.entity
+    }
+    const queueSender = new MessageSender('azure-service-bus-test-client', config)
+    await queueSender.sendMessage(message)
+    await queueSender.closeConnection()
+    response = 'Message sent'
+  } catch (err) {
+    response = `Unable to send message: ${err}`
+    console.error(response)
+  }
   res.send(response)
 })
 

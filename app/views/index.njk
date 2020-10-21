@@ -16,9 +16,22 @@
       </div>
 
       <div class="field">
-        <label class="label">Queue</label>
+        <label class="label">Queue/Topic name</label>
         <div class="control">
           <input class="input" type="text" name="queue">
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="radio">
+            <input type="radio" name="entity" value="queue" checked>
+            Queue
+          </label>
+          <label class="radio">
+            <input type="radio" name="entity" value="topic">
+            Topic
+          </label>
         </div>
       </div>
 
@@ -26,19 +39,6 @@
         <label class="label">Message</label>
         <div class="control">
           <textarea class="textarea" name="message"></textarea>
-        </div>
-      </div>
-
-      <div class="field">
-        <div class="control">
-          <label class="radio">
-            <input type="radio" name="format" value="json" checked>
-            JSON
-          </label>
-          <label class="radio">
-            <input type="radio" name="format" value="string">
-            String
-          </label>
         </div>
       </div>
 

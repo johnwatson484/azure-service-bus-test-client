@@ -3,47 +3,47 @@
 # Azure Service Bus Test Client
 A test client for sending JSON format messages to Azure Service Bus
 
-# Prerequisites
+## Prerequisites
 Node v12+  
 
 Or:  
 
 Docker
 
-# Running the client
-## From source
+## Running the client
+### From source
 - Clone the repo and run `npm install` to install required npm packages
 - Update the preferred port in the `config.js` file.  By default this is set to **3011**.
 - Run `npm start` to start the application.
 
 The application can be run in a container if preferred by running the `scripts/start` script.
 
-## Docker
+### Docker
 `docker run -p 3011:3011 johnwatson484/azure-service-bus-test-client`
 
-## Hosted
+### Hosted
 A hosted version is available at https://asbtc.lynxmagnus.com/
 
-# Using the client
+## Using the client
 The below screenshot shows an overview of the the client.
 
 ![Client Screenshot](/docs/screenshot.png "Client Screenshot")
 
-## Set the connection string
+### Set the connection string
 This can be found in the Azure portal under Shared Access Policies for either the root account or a specific queue key.
 
 This must be in the below format and note that the validation provided by the client is case sensitive.  For example "endpoint=..." would be invalid.  EntityPath is optional as it only applies to queue policies.
 
-`Endpoint=sb://YOUR_HOSTNAME/;SharedAccessKeyName=KEYNAME;SharedAccessKey=KEY;EntityPath=QUEUE`
+`Endpoint=sb://YOUR_HOSTNAME/;SharedAccessKeyName=KEYNAME;SharedAccessKey=KEY`
 
-## Set the queue name
-This is the queue where the message will be sent to.
+### Set the queue or topic name
+This is the queue or topic where the message will be sent to.
 
-## Message
-This is the message that will be sent to the specified queue and must be in JSON format.
+### Message
+This is the message that will be sent to the specified resource and must be in JSON format.
 
-## Format
-Messages can be sent as JSON or stringified JSON.
+### Entity
+Messages can be sent to either a queue or topic.
 
-# Errors
+## Errors
 If invalid crendentials or malformed JSON is provided an error will be returned through the client.
