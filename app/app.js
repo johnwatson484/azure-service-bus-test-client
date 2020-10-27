@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const favicon = require('serve-favicon')
 const { check, validationResult } = require('express-validator')
 const { MessageSender } = require('./messaging')
+const formatMessage = require('./format-message')
 
 nunjucks.configure('./app/views', {
   autoescape: true,
@@ -46,7 +47,7 @@ router.post('/', [
   let response
 
   try {
-    const message = JSON.parse(req.body.message)
+    const message = formatMessage(req.body.format, req.body.message)
     const config = {
       connectionString: req.body.connectionString,
       address: req.body.queue,

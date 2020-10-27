@@ -39,6 +39,9 @@ This must be in the below format and note that the validation provided by the cl
 ### Set the queue or topic name
 This is the queue or topic where the message will be sent to.
 
+### Set the message format
+Messages can be sent as JSON or stringified JSON.
+
 ### Message
 This is the message that will be sent to the specified resource and must be in JSON format.
 
