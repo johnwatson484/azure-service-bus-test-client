@@ -17,6 +17,6 @@
     "nodemon": "^2.0.4",
     "nunjucks": "^3.2.1",
     "serve-favicon": "^2.5.0",
-    "standard": "^14.3.4"
+    "standard": "^16.0.1"
   }
 }
