@@ -5,7 +5,7 @@ const nunjucks = require('nunjucks')
 const bodyParser = require('body-parser')
 const favicon = require('serve-favicon')
 const { check, validationResult } = require('express-validator')
-const { MessageSender } = require('./messaging')
+const { MessageSender, MessageReceiver } = require('./messaging')
 const formatMessage = require('./format-message')
 
 nunjucks.configure('./app/views', {
@@ -22,7 +22,17 @@ router.get('/', function (req, res) {
   res.render('index.njk')
 })
 
-router.post('/', [
+const validateTotal = (total) => {
+  if (!total) {
+    return 0
+  }
+  if (total < 0) {
+    return 0
+  }
+  return Number(total)
+}
+
+router.post('/send', [
   check('connectionString')
     .contains('Endpoint=sb://')
     .withMessage('Connection string Endpoint missing')
@@ -31,8 +41,8 @@ router.post('/', [
     .contains(';SharedAccessKey=')
     .withMessage('Connection string SharedAccessKey missing')
     .trim(),
-  check('queue').isLength({ min: 1 })
-    .withMessage('Invalid queue')
+  check('address').isLength({ min: 1 })
+    .withMessage('Invalid queue/topic')
     .trim(),
   check('message')
     .isJSON()
@@ -50,18 +60,42 @@ router.post('/', [
     const message = formatMessage(req.body.format, req.body.message)
     const config = {
       connectionString: req.body.connectionString,
-      address: req.body.queue,
-      type: req.body.entity
+      address: req.body.address
     }
-    const queueSender = new MessageSender('azure-service-bus-test-client', config)
-    await queueSender.sendMessage(message)
-    await queueSender.closeConnection()
+    const total = validateTotal(req.body.totalReceive)
+    const sender = new MessageSender('azure-service-bus-test-client', config)
+    for (let i = 0; i < total; i++) {
+      await sender.sendMessage(message)
+    }
+    await sender.closeConnection()
     response = 'Message sent'
   } catch (err) {
     response = `Unable to send message: ${err}`
     console.error(response)
   }
   res.send(response)
+})
+
+router.post('/receive', async function (req, res) {
+  let messages
+  let receiver
+
+  try {
+    const config = {
+      connectionString: req.body.connectionString,
+      address: req.body.address,
+      subscription: req.body.subscription
+    }
+    const total = validateTotal(req.body.totalReceive)
+    receiver = new MessageReceiver('azure-service-bus-test-client', config)
+    messages = await receiver.peakMessages(total)
+    messages = messages.map(x => x.body)
+  } catch (err) {
+    console.error(err)
+  } finally {
+    await receiver.closeConnection()
+  }
+  res.send({ messages })
 })
 
 app.use('/', router)

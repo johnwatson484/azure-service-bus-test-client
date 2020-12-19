@@ -6,7 +6,7 @@
   <div class="column">
     <h1 class="title is-2">Azure Service Bus Test Client</h1>
 
-    <form id="frm-message" action="/">
+    <form id="frm-message">
 
       <div class="field">
         <label class="label">Connection String</label>
@@ -18,68 +18,97 @@
       <div class="field">
         <label class="label">Queue/Topic name</label>
         <div class="control">
-          <input class="input" type="text" name="queue">
+          <input class="input" type="text" name="address">
         </div>
       </div>
 
-      <div class="field">
-        <div class="control">
-          <label class="radio">
-            <input type="radio" name="entity" value="queue" checked>
-            Queue
-          </label>
-          <label class="radio">
-            <input type="radio" name="entity" value="topic">
-            Topic
-          </label>
-        </div>
-      </div>
+      <div class="columns">
+        <div class="column">
+          <h3 class="title is-4">Send message</h3>
 
-      <div class="field">
-        <div class="control">
-          <label class="radio">
-            <input type="radio" name="format" value="json" checked>
-            JSON
-          </label>
-          <label class="radio">
-            <input type="radio" name="format" value="string">
-            String
-          </label>
-        </div>
-      </div>
+          <div class="field">
+            <label class="label">Message</label>
+            <div class="control">
+              <textarea class="textarea" name="message"></textarea>
+            </div>
+          </div>
 
-      <div class="field">
-        <label class="label">Message</label>
-        <div class="control">
-          <textarea class="textarea" name="message"></textarea>
-        </div>
-      </div>
+          <div class="field">
+            <div class="control">
+              <label class="radio">
+                <input type="radio" name="format" value="json" checked>
+                JSON
+              </label>
+              <label class="radio">
+                <input type="radio" name="format" value="string">
+                String
+              </label>
+            </div>
+          </div>
 
-      <div class="field">
-        <div class="control">
-          <button class="button is-link" id="send">Send</button>
+          <div class="field">
+            <label class="label">Total</label>
+            <div class="control">
+              <input class="input" style="width:200px;" type="number" name="totalSend" value="1">
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="control">
+              <button class="button is-link" id="send">Send</button>
+            </div>
+          </div>
+
+          <div id="result-send" class="column" style="display: none">
+            <article class="message is-primary">
+              <div id="result-text" class="message-body">
+              </div>
+            </article>
+          </div>
+
         </div>
-      </div>
+        <div class="column">
+          <h3 class="title is-4">Receive message</h3>
+
+          <div class="field">
+            <label class="label">Subscription name (if Topic)</label>
+            <div class="control">
+              <input class="input" type="text" name="subscription">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Total</label>
+            <div class="control">
+              <input class="input" style="width:200px;" type="number" name="totalReceive" value="1">
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="control">
+              <button class="button is-link" id="receive">Receive</button>
+            </div>
+          </div>
+
+          <div id="result-receive" class="column" style="display: none">
+            <article class="message is-primary result-messages">              
+            </article>
+          </div>
+
+        </div>
+      </div>       
     </form>
   </div>
-
-  <div id="result" class="column" style="display: none">
-    <article class="message is-primary">
-      <div id="result-text" class="message-body">
-      </div>
-    </article>
-  </div>
-
 </div>
 
 <script>
-  $("#frm-message").submit(function (e) {
+  $("#send").click(function (e) {
     e.preventDefault()
     $('#send').addClass('is-loading')
-    $('#result').fadeOut(0)
+    $('#result-send').fadeOut(0)
 
-    var form = $(this);
-    var url = form.attr('action')
+    const form = $('#frm-message');
+    const url = '/send'
 
     $.ajax({
       type: "POST",
@@ -88,7 +117,29 @@
       success: function (data) {        
         $('#result-text').html(data)
         $('#send').removeClass('is-loading')
-        $('#result').fadeIn(2000)
+        $('#result-send').fadeIn(2000)
+      }
+    })
+  })
+  $("#receive").click(function (e) {
+    e.preventDefault()
+    //$('#receive').addClass('is-loading')
+    $('#result-receive').fadeOut(0)
+
+    const form = $('#frm-message');
+    const url = '/receive'
+
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: form.serialize(),
+      success: function (data) {
+        $('.result-messages').html('')
+        data.messages.forEach((message) => {
+          $('.result-messages').append(`<div class="message-body">${JSON.stringify(message)}</div>`)
+        })
+        $('#receive').removeClass('is-loading')
+        $('#result-receive').fadeIn(2000)
       }
     })
   })
