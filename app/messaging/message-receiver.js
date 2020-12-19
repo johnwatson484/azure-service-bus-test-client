@@ -22,6 +22,7 @@ class MessageReceiver extends MessageBase {
     console.log(`${this.name} received message`)
     try {
       await this.action(message)
+      await this.receiver.completeMessage(message)
     } catch (ex) {
       console.error(`${this.name} error with message`, ex)
     }

@@ -14,10 +14,12 @@ class MessageSender extends MessageBase {
     } catch (error) {
       console.error('failed to send message', error)
       throw error
-    } finally {
-      await this.sender.close()
     }
-    return message
+  }
+
+  async closeConnection () {
+    await this.sender.close()
+    await super.closeConnection()
   }
 }
 
