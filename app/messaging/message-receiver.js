@@ -5,8 +5,13 @@ class MessageReceiver extends MessageBase {
     super(name, config)
     this.receiverHandler = this.receiverHandler.bind(this)
     this.action = action
-    this.receiver = config.type === 'subscription' ? this.sbClient.createReceiver(config.address, config.topic) : this.sbClient.createReceiver(config.address)
-    this.receiver.registerMessageHandler(this.receiverHandler, this.receiverError)
+    this.receiver = config.type === 'subscription' ? this.sbClient.createReceiver(config.topic, config.address) : this.sbClient.createReceiver(config.address)
+    this.receiver.subscribe({
+      processMessage: this.receiverHandler,
+      processError: async (args) => {
+        this.receiverError(args.error)
+      }
+    })
   }
 
   receiverError (error) {
