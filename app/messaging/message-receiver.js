@@ -1,4 +1,3 @@
-const { ReceiveMode } = require('@azure/service-bus')
 const MessageBase = require('./message-base')
 
 class MessageReceiver extends MessageBase {
@@ -6,7 +5,7 @@ class MessageReceiver extends MessageBase {
     super(name, config)
     this.receiverHandler = this.receiverHandler.bind(this)
     this.action = action
-    this.receiver = this.entityClient.createReceiver(ReceiveMode.peekLock)
+    this.receiver = config.type === 'subscription' ? this.sbClient.createReceiver(config.address, config.topic) : this.sbClient.createReceiver(config.address)
     this.receiver.registerMessageHandler(this.receiverHandler, this.receiverError)
   }
 
