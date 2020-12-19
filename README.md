@@ -1,7 +1,7 @@
 [![Build Status](https://johnwatson484.visualstudio.com/John%20D%20Watson/_apis/build/status/johnwatson484.azure-service-bus-test-client?branchName=master)](https://johnwatson484.visualstudio.com/John%20D%20Watson/_build/latest?definitionId=24&branchName=master)
 
 # Azure Service Bus Test Client
-A test client for sending JSON format messages to Azure Service Bus
+A test client for sending and receiving JSON format messages with Azure Service Bus
 
 ## Prerequisites
 Node v12+  
@@ -37,16 +37,22 @@ This must be in the below format and note that the validation provided by the cl
 `Endpoint=sb://YOUR_HOSTNAME/;SharedAccessKeyName=KEYNAME;SharedAccessKey=KEY`
 
 ### Set the queue or topic name
-This is the queue or topic where the message will be sent to.
+This is the queue or topic where the message will be sent to or received from.
+
+## Sending a message
+### Message
+This is the message that will be sent to the specified resource and must be in JSON format.
 
 ### Set the message format
 Messages can be sent as JSON or stringified JSON.
 
-### Message
-This is the message that will be sent to the specified resource and must be in JSON format.
+### Set the number of copies of the message to send
 
-### Entity
-Messages can be sent to either a queue or topic.
+## Receiving a message
+### Subscription
+If messages are to be received from a topic, then set the subscription name.
+
+### Set the number of messages to receive
 
 ## Errors
 If invalid crendentials or malformed JSON is provided an error will be returned through the client.
