@@ -40,7 +40,7 @@ This must be in the below format and note that the validation provided by the cl
 This is the queue or topic where the message will be sent to or received from.
 
 ## Sending a message
-### Message
+### Set the message body
 This is the message that will be sent to the specified resource and must be in JSON format.
 
 ### Set the message format
@@ -52,7 +52,11 @@ Messages can be sent as JSON or stringified JSON.
 ### Subscription
 If messages are to be received from a topic, then set the subscription name.
 
+### Set whether to peek or complete the message
+Peeked messages remain on the queue, whilst completed messages are removed.
+
 ### Set the number of messages to receive
+Maximum of 250.
 
 ## Errors
 If invalid crendentials or malformed JSON is provided an error will be returned through the client.

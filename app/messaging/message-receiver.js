@@ -10,6 +10,14 @@ class MessageReceiver extends MessageBase {
     return await this.receiver.peekMessages(maxMessageCount)
   }
 
+  async receiveMessages (maxMessageCount) {
+    return await this.receiver.receiveMessages(maxMessageCount)
+  }
+
+  async completeMessage (message) {
+    await this.receiver.completeMessage(message)
+  }
+
   async closeConnection () {
     await this.receiver.close()
     await super.closeConnection()
