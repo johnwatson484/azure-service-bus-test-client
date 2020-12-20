@@ -4,11 +4,13 @@ const router = express.Router()
 const nunjucks = require('nunjucks')
 const bodyParser = require('body-parser')
 const favicon = require('serve-favicon')
+const cookieSession = require('cookie-session')
 const { validationResult } = require('express-validator')
 const { MessageSender, MessageReceiver } = require('./messaging')
 const formatMessage = require('./format-message')
 const mapTotal = require('./map-total')
 const { validateSend, validateReceive } = require('./validation')
+const config = require('./config')
 
 nunjucks.configure('./app/views', {
   autoescape: true,
@@ -17,11 +19,14 @@ nunjucks.configure('./app/views', {
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cookieSession(config.cookie))
 
 app.use(favicon('./app/favicon.ico'))
 
 router.get('/', function (req, res) {
-  res.render('index.njk')
+  const { session: { body } } = req
+  console.log(body)
+  res.render('index.njk', { body })
 })
 
 router.post('/send', validateSend, async function (req, res) {
@@ -29,6 +34,8 @@ router.post('/send', validateSend, async function (req, res) {
   if (!errors.isEmpty()) {
     return res.send(errors.array().map(x => `<p>${x.msg}</p>`))
   }
+
+  req.session.body = req.body
 
   let response
 
@@ -58,6 +65,8 @@ router.post('/receive', validateReceive, async function (req, res) {
   if (!errors.isEmpty()) {
     return res.send({ errors: errors.array().map(x => x.msg) })
   }
+
+  req.session.body = req.body
 
   let messages
   let receiver

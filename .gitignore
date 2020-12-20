@@ -6,3 +6,7 @@ node_modules/
 
 # VS
 .vscode
+
+# Helm
+**/*.lock
+**/*.tgz

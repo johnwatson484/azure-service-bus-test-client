@@ -14,6 +14,7 @@ container:
   readOnlyRootFilesystem: false
   allowPrivilegeEscalation: false
   port: 3011
+  cookieSecret: asbtc-secret
 
 ingress:
   class: nginx
@@ -28,3 +29,6 @@ deployment:
   imagePullSecret:
   runAsNonRoot: true
   runAsUser: 1000
+
+secret:
+  type: Opaque

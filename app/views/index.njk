@@ -11,14 +11,14 @@
       <div class="field">
         <label class="label">Connection String</label>
         <div class="control">
-          <input class="input" type="text" name="connectionString">
+          <input class="input" type="text" name="connectionString" value="{{ body.connectionString }}">
         </div>
       </div>
 
       <div class="field">
         <label class="label">Queue/Topic name</label>
         <div class="control">
-          <input class="input" type="text" name="address">
+          <input class="input" type="text" name="address" value="{{ body.address }}">
         </div>
       </div>
 
@@ -29,7 +29,7 @@
           <div class="field">
             <label class="label">Message</label>
             <div class="control">
-              <textarea class="textarea" name="message"></textarea>
+              <textarea class="textarea" name="message" value="{{ body.message }}"></textarea>
             </div>
           </div>
 
@@ -73,7 +73,7 @@
           <div class="field">
             <label class="label">Subscription name (if Topic)</label>
             <div class="control">
-              <input class="input" type="text" name="subscription">
+              <input class="input" type="text" name="subscription" value="{{ body.subscription }}">
             </div>
           </div>
 
