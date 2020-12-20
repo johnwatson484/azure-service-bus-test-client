@@ -25,7 +25,6 @@ app.use(favicon('./app/favicon.ico'))
 
 router.get('/', function (req, res) {
   const { session: { body } } = req
-  console.log(body)
   res.render('index.njk', { body })
 })
 
