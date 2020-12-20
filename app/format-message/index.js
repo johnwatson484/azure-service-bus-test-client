@@ -1,15 +1,18 @@
-function formatMessage (format, message) {
+const formatMessage = (format, message, id) => {
+  message = replacePlaceholders(message, id)
   return format === 'json' ? toJson(message) : toString(message)
 }
 
-function toJson (message) {
-  console.log('sending as JSON')
+const toJson = (message) => {
   return JSON.parse(message)
 }
 
-function toString (message) {
-  console.log('sending as string')
+const toString = (message) => {
   return JSON.stringify(JSON.parse(message))
+}
+
+const replacePlaceholders = (message, id) => {
+  return message.replace(/##/g, id)
 }
 
 module.exports = formatMessage

@@ -33,7 +33,6 @@ router.post('/send', validateSend, async function (req, res) {
   let response
 
   try {
-    const message = formatMessage(req.body.format, req.body.message)
     const config = {
       connectionString: req.body.connectionString,
       address: req.body.address
@@ -41,6 +40,7 @@ router.post('/send', validateSend, async function (req, res) {
     const total = mapTotal(req.body.totalSend)
     const sender = new MessageSender('azure-service-bus-test-client', config)
     for (let i = 0; i < total; i++) {
+      const message = formatMessage(req.body.format, req.body.message, i + 1)
       await sender.sendMessage(message)
     }
     await sender.closeConnection()

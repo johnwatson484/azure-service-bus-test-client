@@ -41,7 +41,9 @@ This is the queue or topic where the message will be sent to or received from.
 
 ## Sending a message
 ### Set the message body
-This is the message that will be sent to the specified resource and must be in JSON format.
+This is the message that will be sent to the specified resource and must be in JSON format.  
+
+Any `##` placeholders will be replaced by an auto incrementing integer.
 
 ### Set the message format
 Messages can be sent as JSON or stringified JSON.
