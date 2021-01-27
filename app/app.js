@@ -39,12 +39,12 @@ router.post('/send', validateSend, async function (req, res) {
   let response
 
   try {
-    const config = {
+    const mqConfig = {
       connectionString: req.body.connectionString,
       address: req.body.address
     }
     const total = mapTotal(req.body.totalSend)
-    const sender = new MessageSender('azure-service-bus-test-client', config)
+    const sender = new MessageSender('azure-service-bus-test-client', mqConfig)
     for (let i = 0; i < total; i++) {
       const message = formatMessage(req.body.format, req.body.message, i + 1)
       await sender.sendMessage(message)
@@ -71,13 +71,13 @@ router.post('/receive', validateReceive, async function (req, res) {
   let receiver
 
   try {
-    const config = {
+    const mqConfig = {
       connectionString: req.body.connectionString,
       address: req.body.address,
       subscription: req.body.subscription
     }
     const total = mapTotal(req.body.totalReceive)
-    receiver = new MessageReceiver('azure-service-bus-test-client', config)
+    receiver = new MessageReceiver('azure-service-bus-test-client', mqConfig)
     if (req.body.complete === 'true') {
       messages = await receiver.receiveMessages(total)
       for (const message of messages) {

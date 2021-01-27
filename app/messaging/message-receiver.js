@@ -11,7 +11,7 @@ class MessageReceiver extends MessageBase {
   }
 
   async receiveMessages (maxMessageCount) {
-    return await this.receiver.receiveMessages(maxMessageCount)
+    return await this.receiver.receiveMessages(maxMessageCount, { maxWaitTimeInMs: 500, maxTimeAfterFirstMessageInMs: 10000 })
   }
 
   async completeMessage (message) {
