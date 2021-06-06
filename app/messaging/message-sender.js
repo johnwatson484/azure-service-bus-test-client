@@ -7,9 +7,12 @@ class MessageSender extends MessageBase {
     this.sender = this.sbClient.createSender(config.address)
   }
 
-  async sendMessage (message) {
+  async sendMessage (message, correlationId) {
     try {
-      await this.sender.sendMessages({ body: message })
+      await this.sender.sendMessages({
+        body: message,
+        correlationId
+      })
     } catch (error) {
       console.error('failed to send message', error)
       throw error

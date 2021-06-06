@@ -11,6 +11,7 @@ const formatMessage = require('./format-message')
 const mapTotal = require('./map-total')
 const { validateSend, validateReceive } = require('./validation')
 const config = require('./config')
+const { v4: uuidv4 } = require('uuid')
 
 nunjucks.configure('./app/views', {
   autoescape: true,
@@ -47,7 +48,8 @@ router.post('/send', validateSend, async function (req, res) {
     const sender = new MessageSender('azure-service-bus-test-client', mqConfig)
     for (let i = 0; i < total; i++) {
       const message = formatMessage(req.body.format, req.body.message, i + 1)
-      await sender.sendMessage(message)
+      const correlationId = req.body.generateCorrelationId ? uuidv4() : req.body.correlationId
+      await sender.sendMessage(message, correlationId)
     }
     await sender.closeConnection()
     response = `Sent ${total} messages`
