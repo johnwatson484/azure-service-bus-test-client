@@ -3,7 +3,7 @@ const MessageBase = require('./message-base')
 class MessageReceiver extends MessageBase {
   constructor (name, config) {
     super(name, config)
-    this.receiver = config.subscription ? this.sbClient.createReceiver(config.address, config.subscription) : this.sbClient.createReceiver(config.address)
+    this.receiver = config.subscription ? this.sbClient.createReceiver(config.address, config.subscription, config.options) : this.sbClient.createReceiver(config.address, config.options)
   }
 
   async peakMessages (maxMessageCount) {

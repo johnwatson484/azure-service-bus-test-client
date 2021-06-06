@@ -76,7 +76,10 @@ router.post('/receive', validateReceive, async function (req, res) {
     const mqConfig = {
       connectionString: req.body.connectionString,
       address: req.body.address,
-      subscription: req.body.subscription
+      subscription: req.body.subscription,
+      options: {
+        subQueueType: req.body.fromDeadLetter ? 'deadLetter' : undefined
+      }
     }
     const total = mapTotal(req.body.totalReceive)
     receiver = new MessageReceiver('azure-service-bus-test-client', mqConfig)
