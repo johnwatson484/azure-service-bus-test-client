@@ -1,5 +1,7 @@
 [![Build Status](https://johnwatson484.visualstudio.com/John%20D%20Watson/_apis/build/status/johnwatson484.azure-service-bus-test-client?branchName=master)](https://johnwatson484.visualstudio.com/John%20D%20Watson/_build/latest?definitionId=24&branchName=master)
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=johnwatson484_azure-service-bus-test-client&metric=alert_status)](https://sonarcloud.io/dashboard?id=johnwatson484_azure-service-bus-test-client)
+
 # Azure Service Bus Test Client
 A test client for sending and receiving JSON format messages with Azure Service Bus
 
