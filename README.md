@@ -60,7 +60,6 @@ If messages are to be received from a topic, then set the subscription name.
 Peeked messages remain on the queue, whilst completed messages are removed.
 
 ### Set the number of messages to receive
-Maximum of 250.
 
 ## Errors
 If invalid credentials or malformed JSON is provided an error will be returned through the client.
