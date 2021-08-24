@@ -2,12 +2,8 @@
 
 {% block content %}
 
-<div class="container">
   <div class="column">
-    <h1 class="title is-2">Azure Service Bus Test Client</h1>
-
     <form id="frm-message">
-
       <div class="field">
         <label class="label">Connection String</label>
         <div class="control">
@@ -72,8 +68,7 @@
 
           <div id="result-send" class="column" style="display: none">
             <article class="message is-primary">
-              <div id="result-text-send" class="message-body">
-              </div>
+              <div id="result-text-send" class="message-body"></div>
             </article>
           </div>
 
@@ -129,69 +124,70 @@
 
           <div id="result-receive" class="column" style="display: none">
             <article class="message is-primary">
-              <div id="result-text-receive" class="message-body">
-              </div>
+              <div id="result-text-receive" class="message-body"></div>
             </article>
-            <article class="message is-primary result-messages">
-            </article>
+            <article class="message is-primary result-messages"></article>
           </div>
 
         </div>
       </div>
     </form>
   </div>
-</div>
 
-<script>
-  $("#send").click(function (e) {
-    e.preventDefault()
-    $('#send').addClass('is-loading')
-    $('#result-send').fadeOut(0)
+  <script>
+    $("#send").click(function (e) {
+      e.preventDefault()
+      $('#send').addClass('is-loading')
+      $('#result-send').fadeOut(0)
 
-    const form = $('#frm-message');
-    const url = '/send'
+      const form = $('#frm-message');
+      const url = '/send'
 
-    $.ajax({
-      type: "POST",
-      url: url,
-      data: form.serialize(),
-      success: function (data) {     
-        $('#result-text-send').html(data)
-        $('#send').removeClass('is-loading')
-        $('#result-send').fadeIn(2000)
-      }
-    })
-  })
-  $("#receive").click(function (e) {
-    e.preventDefault()
-    $('#receive').addClass('is-loading')
-    $('#result-receive').fadeOut(0)
-
-    const form = $('#frm-message');
-    const url = '/receive'
-
-    $.ajax({
-      type: "POST",
-      url: url,
-      data: form.serialize(),
-      success: function (data) {
-        $('#result-text-receive').html('')
-        $('.result-messages').html('')
-        if(data.errors){
-          data.errors.forEach((error) => {
-            $('#result-text-receive').append(`<p>${error}</p>`)
-          })
-        } else {
-          $('#result-text-receive').html(`Total messages: ${data.messages.length}`)
-          data.messages.forEach((message) => {
-            $('.result-messages').append(`<div class="message-body">${JSON.stringify(message)}</div>`)
-          })
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: form.serialize(),
+        success: function (data) {
+          $('#result-text-send').html(data)
+          $('#send').removeClass('is-loading')
+          $('#result-send').fadeIn(2000)
         }
-        $('#receive').removeClass('is-loading')
-        $('#result-receive').fadeIn(2000)
-      }
+      })
     })
-  })
-</script>
+    $("#receive").click(function (e) {
+      e.preventDefault()
+      $('#receive').addClass('is-loading')
+      $('#result-receive').fadeOut(0)
+
+      const form = $('#frm-message');
+      const url = '/receive'
+
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: form.serialize(),
+        success: function (data) {
+          $('#result-text-receive').html('')
+          $('.result-messages').html('')
+          if (data.errors) {
+            data
+              .errors
+              .forEach((error) => {
+                $('#result-text-receive').append(`<p>${error}</p>`)
+              })
+          } else {
+            $('#result-text-receive').html(`Total messages: ${data.messages.length}`)
+            data
+              .messages
+              .forEach((message) => {
+                $('.result-messages').append(`<div class="message-body">${JSON.stringify(message)}</div>`)
+              })
+          }
+          $('#receive').removeClass('is-loading')
+          $('#result-receive').fadeIn(2000)
+        }
+      })
+    })
+  </script>
 
 {% endblock %}
