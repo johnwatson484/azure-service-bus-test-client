@@ -6,12 +6,12 @@ class MessageReceiver extends MessageBase {
     this.receiver = config.subscription ? this.sbClient.createReceiver(config.address, config.subscription, config.options) : this.sbClient.createReceiver(config.address, config.options)
   }
 
-  async peakMessages (maxMessageCount) {
-    return this.receiver.peekMessages(maxMessageCount)
+  async peakMessages (maxMessageCount, options = {}) {
+    return this.receiver.peekMessages(maxMessageCount, options)
   }
 
-  async receiveMessages (maxMessageCount) {
-    return this.receiver.receiveMessages(maxMessageCount, { maxWaitTimeInMs: 500, maxTimeAfterFirstMessageInMs: 10000 })
+  async receiveMessages (maxMessageCount, options = {}) {
+    return this.receiver.receiveMessages(maxMessageCount, options)
   }
 
   async completeMessage (message) {

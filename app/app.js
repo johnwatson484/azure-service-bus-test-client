@@ -83,14 +83,20 @@ router.post('/receive', validateReceive, async function (req, res) {
       }
     }
     const total = mapTotal(req.body.totalReceive)
+    if (req.body.method !== 'peek') {
+      mqConfig.options.receiveMode = 'receiveAndDelete'
+    }
     receiver = new MessageReceiver('azure-service-bus-test-client', mqConfig)
-    if (req.body.complete === 'true') {
+    if (req.body.method === 'complete') {
       messages = await receiver.receiveMessages(total)
-      for (const message of messages) {
-        await receiver.completeMessage(message)
-      }
-    } else {
+    } else if (req.body.method === 'peek') {
       messages = await receiver.peakMessages(total)
+    } else {
+      const batchSize = 100
+      do {
+        messages = await receiver.receiveMessages(batchSize, { maxWaitTimeInMs: 1000 })
+      } while (messages.length > 0 && messages.length === batchSize)
+      messages = []
     }
     messages = messages.map(x => x.body)
   } catch (err) {
