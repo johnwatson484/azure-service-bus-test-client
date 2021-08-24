@@ -1,6 +1,6 @@
 [![Build Status](https://johnwatson484.visualstudio.com/John%20D%20Watson/_apis/build/status/johnwatson484.azure-service-bus-test-client?branchName=master)](https://johnwatson484.visualstudio.com/John%20D%20Watson/_build/latest?definitionId=24&branchName=master)
-
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=johnwatson484_azure-service-bus-test-client&metric=alert_status)](https://sonarcloud.io/dashboard?id=johnwatson484_azure-service-bus-test-client)
+[![Known Vulnerabilities](https://snyk.io/test/github/johnwatson484/azure-service-bus-test-client/badge.svg)](https://snyk.io/test/github/johnwatson484/azure-service-bus-test-client)
 
 # Azure Service Bus Test Client
 A test client for sending and receiving JSON format messages with Azure Service Bus
@@ -56,11 +56,11 @@ Messages can be sent as JSON or stringified JSON.
 ### Subscription
 If messages are to be received from a topic, then set the subscription name.
 
-### Set whether to peek or complete the message
+### Set whether to peek, complete or clear the full queue.
 Peeked messages remain on the queue, whilst completed messages are removed.
 
 ### Set the number of messages to receive
 Maximum of 250.
 
 ## Errors
-If invalid crendentials or malformed JSON is provided an error will be returned through the client.
+If invalid credentials or malformed JSON is provided an error will be returned through the client.
