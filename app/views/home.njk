@@ -180,7 +180,7 @@
             data
               .messages
               .forEach((message) => {
-                $('.result-messages').append(`<div class="message-body">${JSON.stringify(message)}</div>`)
+                $('.result-messages').append(`<div class="message-body"><pre>${JSON.stringify(message, null, 2)}</pre></div>`)
               })
           }
           $('#receive').removeClass('is-loading')

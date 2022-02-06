@@ -1,6 +1,6 @@
 {
   "name": "azure-service-bus-test-client",
-  "version": "1.11.14",
+  "version": "1.12.0",
   "description": "A client to send and receive messages with Azure Service Bus",
   "main": "./app/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "start:watch": "nodemon --inspect=0.0.0.0 --ext js,njk --legacy-watch ./app"
   },
   "author": "John Watson",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@azure/service-bus": "^7.0.0",
     "body-parser": "^1.19.0",
