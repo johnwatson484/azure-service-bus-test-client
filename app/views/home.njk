@@ -7,14 +7,14 @@
       <div class="field">
         <label class="label">Connection String</label>
         <div class="control">
-          <input class="input" type="text" name="connectionString" value="{{ body.connectionString }}">
+          <input class="input is-link" type="text" name="connectionString" value="{{ body.connectionString }}">
         </div>
       </div>
 
       <div class="field">
         <label class="label">Queue/Topic name</label>
         <div class="control">
-          <input class="input" type="text" name="address" value="{{ body.address }}">
+          <input class="input is-link" type="text" name="address" value="{{ body.address }}">
         </div>
       </div>
 
@@ -25,14 +25,14 @@
           <div class="field">
             <label class="label">Message</label>
             <div class="control">
-              <textarea class="textarea" name="message">{{ body.message }}</textarea>
+              <textarea class="textarea is-link" name="message">{{ body.message }}</textarea>
             </div>
           </div>
 
           <div class="field">
             <label class="label">Correlation ID</label>
             <div class="control">
-              <input class="input" type="text" name="correlationId" value="{{ body.correlationId }}">
+              <input class="input is-link" type="text" name="correlationId" value="{{ body.correlationId }}">
               <label class="checkbox">
                 <input type="checkbox" name="generateCorrelationId" value="true">
                 Auto generate
@@ -56,7 +56,7 @@
           <div class="field">
             <label class="label">Total</label>
             <div class="control">
-              <input class="input" style="width:200px;" type="number" name="totalSend" value="1">
+              <input class="input is-link" style="width:200px;" type="number" name="totalSend" value="1">
             </div>
           </div>
 
@@ -79,7 +79,7 @@
           <div class="field">
             <label class="label">Subscription name (if Topic)</label>
             <div class="control">
-              <input class="input" type="text" name="subscription" value="{{ body.subscription }}">
+              <input class="input is-link" type="text" name="subscription" value="{{ body.subscription }}">
             </div>
           </div>
 
@@ -112,7 +112,7 @@
           <div class="field">
             <label class="label">Total</label>
             <div class="control">
-              <input class="input" style="width:200px;" type="number" name="totalReceive" value="1">
+              <input class="input is-link" style="width:200px;" type="number" name="totalReceive" value="1">
             </div>
           </div>
 
