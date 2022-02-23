@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 # This override file should be used in development environments to
 # bind-mount the app from the host into the container
@@ -12,5 +12,4 @@ services:
       - "3011:3011"
     volumes:
       - ./app:/home/node/app
-      - ./package.json:/node/package.json
 

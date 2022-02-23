@@ -6,7 +6,7 @@
 A test client for sending and receiving JSON format messages with Azure Service Bus
 
 ## Prerequisites
-Node v14+  
+Node v16+
 
 Or:  
 
