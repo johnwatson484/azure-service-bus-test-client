@@ -12,4 +12,4 @@ services:
       - "3011:3011"
     volumes:
       - ./app:/home/node/app
-
+      - ./package.json:/home/node/package.json
