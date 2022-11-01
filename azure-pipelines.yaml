@@ -9,8 +9,12 @@ resources:
     type: github
     endpoint: John D Watson
     name: johnwatson484/azure-devops-templates
+    ref: refs/tags/1
 
 extends:
   template: build.yaml@templates
   parameters:
-    repo: azure-service-bus-test-client
+    name: azure-service-bus-test-client
+    deploy: true
+    namespace: azure-service-bus-test-client
+    hasSecureHelmValuesFile: true

@@ -1,4 +1,3 @@
-version: '3.9'
 services:
   azure-service-bus-test-client:
     build: .

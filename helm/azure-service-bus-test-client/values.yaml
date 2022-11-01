@@ -1,34 +1,18 @@
-environment: development
+environment: production
 name: azure-service-bus-test-client
 image: azure-service-bus-test-client
 
-service:
-  port: 80
-
 container:
-  imagePullPolicy: IfNotPresent
   requestMemory: 60Mi
   requestCpu: 60m
   limitMemory: 120Mi
   limitCpu: 120m
-  readOnlyRootFilesystem: false
-  allowPrivilegeEscalation: false
   port: 3011
   cookieSecret: asbtc-secret
 
-ingress:
-  class: nginx
-  host:
-  certIssuer: letsencrypt
+ingress: {}
 
-deployment:
-  restartPolicy: Always
-  replicas: 1
-  minReadySeconds: 5
-  redeployOnChange: update this field to force a change
-  imagePullSecret:
-  runAsNonRoot: true
-  runAsUser: 1000
+deployment: {}
 
 secret:
   type: Opaque
