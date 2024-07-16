@@ -11,7 +11,7 @@ class MessageSender extends MessageBase {
     try {
       await this.sender.sendMessages({
         body: message,
-        correlationId
+        correlationId,
       })
     } catch (error) {
       console.error('failed to send message', error)

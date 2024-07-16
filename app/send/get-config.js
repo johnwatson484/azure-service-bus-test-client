@@ -1,7 +1,7 @@
 const getConfig = (options) => {
   return {
     connectionString: options.connectionString,
-    address: options.address
+    address: options.address,
   }
 }
 

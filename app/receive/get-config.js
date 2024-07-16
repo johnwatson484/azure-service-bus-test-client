@@ -5,8 +5,8 @@ const getConfig = (options) => {
     subscription: options.subscription,
     options: {
       subQueueType: options.fromDeadLetter ? 'deadLetter' : undefined,
-      receiveMode: options.method !== 'peek' ? 'receiveAndDelete' : undefined
-    }
+      receiveMode: options.method !== 'peek' ? 'receiveAndDelete' : undefined,
+    },
   }
 }
 

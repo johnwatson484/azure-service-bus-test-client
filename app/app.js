@@ -13,7 +13,7 @@ const home = require('./home')
 
 nunjucks.configure('./app/views', {
   autoescape: true,
-  express: app
+  express: app,
 })
 
 app.disable('x-powered-by')
