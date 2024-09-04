@@ -8,11 +8,11 @@ container:
   limitMemory: 120Mi
   limitCpu: 120m
   port: 3011
-  cookieSecret: asbtc-secret
 
-ingress: {}
+ingress:
+  host: asbtc.lynxmagnus.com
 
 deployment: {}
 
 secret:
-  type: Opaque
+  secretsPath: /azure-service-bus-test-client

@@ -17,4 +17,3 @@ extends:
     name: azure-service-bus-test-client
     deploy: true
     namespace: azure-service-bus
-    hasSecureHelmValuesFile: true
