@@ -1,6 +1,6 @@
 {
   "name": "azure-service-bus-test-client",
-  "version": "1.13.12",
+  "version": "1.13.13",
   "description": "A client to send and receive messages with Azure Service Bus",
   "main": "./app/index.js",
   "scripts": {
@@ -11,9 +11,9 @@
   "license": "MIT",
   "dependencies": {
     "@azure/service-bus": "7.9.0",
-    "body-parser": "1.20.1",
+    "body-parser": "1.20.3",
     "cookie-session": "1.4.0",
-    "express": "4.19.2",
+    "express": "4.21.0",
     "express-validator": "6.7.0",
     "nunjucks": "3.2.4",
     "serve-favicon": "2.5.0",

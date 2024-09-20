@@ -1,18 +1,15 @@
-environment: production
-name: azure-service-bus-test-client
-image: azure-service-bus-test-client
-
 container:
-  requestMemory: 60Mi
-  requestCpu: 60m
-  limitMemory: 120Mi
-  limitCpu: 120m
+  image: azure-service-bus-test-client
+  resourceTier: M
   port: 3011
 
 ingress:
   host: asbtc.lynxmagnus.com
 
 deployment: {}
+
+configMap:
+  environment: production
 
 secret:
   secretsPath: /azure-service-bus-test-client

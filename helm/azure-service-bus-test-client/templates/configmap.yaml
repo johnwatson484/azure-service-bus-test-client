@@ -1,6 +1,6 @@
 {{- include "helm-library.configmap" (list . "azure-service-bus-test-client.configmap") -}}
 {{- define "azure-service-bus-test-client.configmap" -}}
 data:
-  NODE_ENV: {{ quote .Values.environment }}
-  PORT: {{ quote .Values.container.port }}
+  PORT: {{ .Values.container.port | quote }}
+  NODE_ENV: {{ .Values.configMap.environment | quote }}
 {{- end -}}
