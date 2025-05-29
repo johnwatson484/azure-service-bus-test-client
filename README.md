@@ -21,7 +21,38 @@ Docker
 The application can be run in a container if preferred by running the `scripts/start` script.
 
 ### Docker
-`docker run -p 3011:3011 johnwatson484/azure-service-bus-test-client`
+```
+docker run -p 3011:3011 johnwatson484/azure-service-bus-test-client
+```
+
+#### With default connection string
+You can set default values that will be pre-filled in the form:
+
+```
+docker run -p 3011:3011 \
+  -e DEFAULT_CONNECTION_STRING="Endpoint=sb://your-namespace.servicebus.windows.net/;SharedAccessKeyName=YourKeyName;SharedAccessKey=YourKeyValue" \
+  -e DEFAULT_QUEUE_OR_TOPIC_NAME="your-queue-or-topic-name" \
+  -e DEFAULT_SUBSCRIPTION_NAME="your-subscription-name" \
+  johnwatson484/azure-service-bus-test-client
+```
+
+### Using Docker Compose
+Create a `.env` file based on the `.env.example` file and run:
+
+```
+docker-compose up
+```
+
+For a more advanced example with pre-configured connection string settings, see the `docker-compose.example.yaml` file. You can use it as a reference for setting up your environment:
+
+```
+# Copy the example to your override file
+copy docker-compose.example.yaml docker-compose.override.yaml
+
+# Edit the file to include your actual connection settings
+# Then run with:
+docker-compose up
+```
 
 ### Hosted
 A hosted version is available at https://asbtc.lynxmagnus.com/

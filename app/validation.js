@@ -19,9 +19,20 @@ const validateAddress = [
 
 const validateMessage = [
   check('message')
-    .isJSON()
-    .withMessage('Invalid JSON message')
-    .trim(),
+    // First trim the message
+    .trim()
+    // Only apply JSON validation if format is 'json'
+    .if((value, { req }) => req.body.format === 'json')
+    // Then check if it's valid JSON
+    .custom((value) => {
+      try {
+        JSON.parse(value)
+        return true
+      } catch {
+        return false
+      }
+    })
+    .withMessage('Invalid JSON message'),
 ]
 
 const validateSend = [].concat(validateConnectionString, validateAddress, validateMessage)

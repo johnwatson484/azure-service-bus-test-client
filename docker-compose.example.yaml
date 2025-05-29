@@ -1,0 +1,17 @@
+# Example docker-compose file with default Azure Service Bus connection parameters
+# Copy this file to docker-compose.override.yaml or merge with your existing override file
+
+services:
+  azure-service-bus-test-client:
+    build: 
+      context: .
+      target: development
+    environment:
+      - DEFAULT_CONNECTION_STRING=Endpoint=sb://your-namespace.servicebus.windows.net/;SharedAccessKeyName=YourKeyName;SharedAccessKey=YourKeyValue
+      - DEFAULT_QUEUE_OR_TOPIC_NAME=your-queue-or-topic-name
+      - DEFAULT_SUBSCRIPTION_NAME=your-subscription-name
+    ports:
+      - "3011:3011"
+    volumes:
+      - ./app:/home/node/app
+      - ./package.json:/home/node/package.json

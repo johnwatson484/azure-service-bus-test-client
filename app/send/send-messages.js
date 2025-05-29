@@ -13,7 +13,8 @@ const sendMessages = async (options) => {
     for (let i = 1; i <= total; i++) {
       const message = formatMessage(options.format, options.message, i)
       const correlationId = getCorrelationId(options.generateCorrelationId, options.correlationId)
-      await sender.sendMessage(message, correlationId)
+      const subject = options.subject
+      await sender.sendMessage(message, correlationId, subject)
     }
     return `Sent ${total} messages`
   } catch (err) {
