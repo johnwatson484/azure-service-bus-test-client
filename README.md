@@ -23,9 +23,6 @@ The application can be run in a container if preferred by running the `scripts/s
 ### Docker
 `docker run -p 3011:3011 johnwatson484/azure-service-bus-test-client`
 
-### Hosted
-A hosted version is available at https://asbtc.lynxmagnus.com/
-
 ## Using the client
 The below screenshot shows an overview of the the client.
 

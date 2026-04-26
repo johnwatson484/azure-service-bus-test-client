@@ -15,5 +15,5 @@ extends:
   template: build.yaml@templates
   parameters:
     name: azure-service-bus-test-client
-    deploy: true
+    deploy: false
     namespace: azure-service-bus
